@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../redux/store';
 import { searchMovies } from '../redux/movieSlice';
+import { FaSearch } from 'react-icons/fa';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
@@ -14,23 +15,31 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg">
-      <div className="flex items-center">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search movies..."
-          className="w-full px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors"
-        >
-          Search
-        </button>
-      </div>
-    </form>
+    <div className="w-full max-w-2xl mx-auto">
+      <form 
+        onSubmit={handleSubmit} 
+        className="search-bar bg-gray-800 rounded-full p-1 shadow-xl"
+      >
+        <div className="flex items-center">
+          <div className="pl-4 text-gray-400">
+            <FaSearch />
+          </div>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search for movies..."
+            className="w-full px-4 py-3 bg-transparent border-0 focus:outline-none focus:ring-0 text-white placeholder-gray-400"
+          />
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105 font-medium shadow-lg"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

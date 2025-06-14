@@ -1,47 +1,62 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../redux/store' 
-import SearchBar from '../components/SearchBar'
-import MovieCard from '../components/MovieCard'
-import { searchMovies } from '../redux/movieSlice' 
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import SearchBar from '../components/SearchBar';
+import MovieCard from '../components/MovieCard';
+import { searchMovies } from '../redux/movieSlice';
 
 const Home = () => {
-  const dispatch = useAppDispatch()
-  const { movies, loading, error } = useAppSelector(state => state.movies)
+  const dispatch = useAppDispatch();
+  const { movies, loading, error } = useAppSelector(state => state.movies);
 
   useEffect(() => {
-    dispatch(searchMovies({ query: '', page: 1 })) // Fixed action call
-  }, [dispatch])
+    dispatch(searchMovies({ query: '', page: 1 }));
+  }, [dispatch]);
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Discover Movies</h1>
-        <SearchBar />
+    <div className="text-center">
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-red-500">
+          Discover Amazing Movies
+        </h1>
+        <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
+          Explore thousands of movies, find your favorites, and discover new gems
+        </p>
+        <div className="flex justify-center">
+          <SearchBar />
+        </div>
       </div>
 
-      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
+      {error && (
+        <div className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded mb-8 max-w-2xl mx-auto">
+          {error}
+        </div>
+      )}
 
       {movies.length === 0 && !loading ? (
         <div className="text-center py-12">
-          <div className="text-5xl mb-4">🔍</div>
-          <p className="text-xl">No movies found</p>
-          <p className="text-gray-600 mt-2">Try a different search term</p>
+          <div className="text-8xl mb-4">🔍</div>
+          <p className="text-2xl font-medium mb-2">No movies found</p>
+          <p className="text-gray-400 max-w-md mx-auto">
+            Try searching for something else or browse popular movies
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {movies.map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          {movies.map((movie, index) => (
+            <div key={movie.id} className="movie-card transition-all duration-300">
+              <MovieCard movie={movie} />
+            </div>
           ))}
         </div>
       )}
 
       {loading && (
-        <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="flex justify-center py-16">
+          <div className="loading-spinner rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
